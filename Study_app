@@ -1,0 +1,104 @@
+import time 
+import random
+registred_users = {}
+while True:
+    print('Выберите опцию:','1: зарегистрироватся','2: Вход','#Если вы тут впервые лучше зарегистрируйтесь',sep = '\n')
+    option = input('Опция:')
+
+    
+    if option == '1':
+        while True:
+            name = input('Введите Имя пользователя/Логин:')
+            if name in registred_users:
+                print('Такой логин уже существует,выберите новый')
+                continue
+            break
+        while True:
+            psw = input('Введите пароль:')
+            nums,lett = False ,False
+            for i in psw:
+                if i.isalpha():
+                    lett = True
+                if i.isdigit():
+                    nums = True
+            if len(psw) >=5 and lett and nums:
+                break
+        
+            print('Вы вели некорректный пароль.Пароль должен быть не короче 5 символов и содержать только латинские буквы и цифры')
+        registred_users[name] = psw
+            
+    if option == '2' and len(registred_users) != 0:
+        name = input('Введите Имя пользователя/Логин:')
+        psw = input('Введите пароль:')
+        or_name,or_psw = *registred_users.keys(),*registred_users.values()
+        if name == or_name and psw == or_psw:
+            print(f'Добро пожаловать {name}')
+            break
+        print('Неверный пароль или логин')
+    
+
+cards = {} 
+
+print('Карточки')
+
+while True:
+    print('Опции:')
+    print('1:Добавить карточку','2:Показать случайную карточку','3:Запустить викторину','4:Выйти',sep = '\n')
+
+    ch = input('Выберите опцию: ')
+
+    #  1.Добавление карточек
+    if ch == '1':
+        q = input('Введите вопрос: ')
+        a = input('Введите ответ: ')
+        cards[q] = a
+        print('Карточка добавлена!')
+
+    #2. Случайная карточки 
+    elif ch == '2':
+        if len(cards) == 0:
+            print('Карточек пока нет!')
+        else:
+            q = random.choice(list(cards.keys()))
+            print('Вопрос:', q)
+            print('Ответ:', cards[q])
+
+    #  3. Викторина 
+    elif ch == '3':
+        if len(cards) == 0:
+            print('Нет карточек для викторины!')
+        else:
+            print('Викторина началась!')
+            correct = 0  # правильные ответы
+            random.shuffle(cards)
+            for q in cards:
+                print('Вопрос:', q)
+                start = time.time()
+                user_answer = input('Ваш ответ?:')
+                while True:
+                    
+                    if time.time() - start > 30:
+                        print('Время вышло!')
+                        break
+
+                    if user_answer.lower() == cards[q].lower():
+                        print('Правильно!')
+                        correct += 1
+                        break
+                    else:
+                        print(' Неправильно!')
+                        print(f'Ответ : {cards[q]}')
+                        break
+
+            print('\nBиктopинa окончена!')
+            print(f'Правильных ответов:{correct} из {len(cards)}')
+
+    #  4. Выход 
+    elif ch == '4':
+        print('Выход.')
+        break
+    else:
+        print('Неверная опция!')
+
+            
+            
