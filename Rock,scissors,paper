@@ -1,0 +1,65 @@
+from random import randint
+#tkinter
+print('Привет это игра Камень,Ножницы и Бумага')
+print('Правила просты ты пишешь число которая означает твое действие')
+print('1 это Камень,2 это Бумага и 3 это Ножницы')
+print('А я тоже буду делать свой выбор')
+print('Не забудь')
+print('Камень ломает ножницы,но боится Бумагу')
+print('Бумага комкает камень, но боится острых лезвий Ножниц')
+print('Ножницы любит кромсать Бумагу,однако ломает лезвия об Камня')
+chose = {1 : 'камень',
+         2 : 'бумага',
+         3 : 'ножницы'}
+score_pc,score_user = 0,0
+def get_pc_choice():
+    choice = chose[randint(1,3)]
+    return choice
+def winner(ps,user):
+    if ps == chose[1]:
+        if user == chose[3]:
+            return 'победил компьютер'
+        elif user == chose[2]:
+            return 'победил пользователь'
+    if ps == chose[2]:
+        if user == chose[1]:
+            return 'победил компьютер'
+        elif user == chose[3]:
+            return 'победил пользователь'
+    if ps == chose[3]:
+        if user == chose[2]:
+            return 'победил компьютер'
+        elif user == chose[1]:
+            return 'победил пользователь'
+    return 'Ничья'
+def main(a,b):
+    pc_choice = get_pc_choice()
+    win = winner(pc_choice,user_choice)
+    if win == 'победил компьютер':
+        a += 1
+    if win == 'победил пользователь':
+        b += 1
+        
+    print(f'Ваш выбор :{user_choice}')
+    print(f'Выбор компьютера:{pc_choice}')
+    print(win)
+    print(f'Счет компьютера {a} : {b} счет пользователя')
+    return a,b 
+while True:
+    user_choice = input('Введите 1,2 или 3 для игры:')
+    if user_choice in '123':# .isdigit()
+        user_choice = int(user_choice)
+    else:
+        print('Вводи только цифры 1,2 или 3.Других ответов нету')
+        continue
+    user_choice = chose[user_choice]
+    score_pc,score_user = main(score_pc,score_user)
+    if score_pc == 3:
+        print(f'Компьютер получил 3 очка.Окончательный счет {score_pc} : {score_user} в пользу компьютера.')
+        print('Спасибо за игру')
+        break
+    if score_user == 3:
+        print(f'Пользователь получил 3 очка.Окончательный счет {score_user} : {score_pc} в пользу пользователя.')
+        print('Спасибо за игру')
+        break
+#tkinter
